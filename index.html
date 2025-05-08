@@ -3,31 +3,42 @@
 <head>
   <meta charset="UTF-8">
   <title>HBD TO Rachelkhiel</title>
-  <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Amatic+SC" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Ikon Font Awesome untuk kado -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css?family=Indie+Flower&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Amatic+SC&display=swap" rel="stylesheet">
   <script src="https://kit.fontawesome.com/4f3ce16e3e.js" crossorigin="anonymous"></script>
-
-  <style>
-    .gift-icon-img {
-      position: fixed;
-      top: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 60px;
-      height: 60px;
-      cursor: pointer;
-      z-index: 9999;
-      transition: transform 0.3s ease;
-    }
-
-    .gift-icon-img:hover {
-      transform: translateX(-50%) scale(1.2);
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
+<!-- Confetti Effect -->
+<canvas id="confetti-canvas"></canvas>
+<script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+<script>
+  // Fire confetti on page load
+  window.onload = () => {
+    const duration = 5 * 1000;
+    const end = Date.now() + duration;
+
+    (function frame() {
+      confetti({
+        particleCount: 3,
+        angle: 60,
+        spread: 55,
+        origin: { x: 0 },
+      });
+      confetti({
+        particleCount: 3,
+        angle: 120,
+        spread: 55,
+        origin: { x: 1 },
+      });
+
+      if (Date.now() < end) {
+        requestAnimationFrame(frame);
+      }
+    })();
+  };
+</script>
+
 <body>
 
   <!-- Ikon Kado -->
@@ -39,7 +50,7 @@
   <div class="card">
     <div class="imgBox">
       <div class="bark"></div>
-      <img src="Happy.png">
+      <img src="Happy.png" alt="Happy Birthday Image">
     </div>
     <div class="details">
       <h4 class="color1">HAPPY BIRTHDAY TO YOU</h4>
@@ -59,4 +70,3 @@
 
 </body>
 </html>
-s
