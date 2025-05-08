@@ -7,20 +7,221 @@
   <link href="https://fonts.googleapis.com/css2?family=Shippori+Antique:wght@400;700&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Dancing+Script&display=swap" rel="stylesheet">
 
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script><link href="https://feeldreams.github.io/heihbd/style.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
+  <link href="https://feeldreams.github.io/heihbd/style.css" rel="stylesheet" type="text/css" />
   <script src="https://unpkg.com/typeit@8.7.0/dist/index.umd.js"></script>
   <script src="https://kit.fontawesome.com/4f3ce16e3e.js" crossorigin="anonymous"></script>
+  
+  <!-- Tambahan library untuk efek kembang api -->
+  <script src="https://cdn.jsdelivr.net/npm/fireworks-js@2.x/dist/index.umd.js"></script>
+  
+  <!-- Tambahan library untuk konfeti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
 <head>
 <title>HAPPY BIRTHDAY PRINCESS RACHEL </title>
 <link rel="icon" type="image/x-icon" href="https://www.palingit.com/favicon.ico">
 <meta name="description" content="HTML Replit Coding">
 
+<style>
+  /* Styles untuk efek-efek tambahan */
+  .fireworks-container {
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 999;
+    opacity: 0;
+    transition: opacity 1s ease;
+  }
+  
+  .gift-bounce {
+    animation: bounce 1s infinite alternate;
+  }
+  
+  @keyframes bounce {
+    from {
+      transform: translateY(0px) scale(1);
+    }
+    to {
+      transform: translateY(-10px) scale(1.1);
+    }
+  }
+  
+  #kadoIn img {
+    transition: transform 0.5s ease;
+  }
+  
+  #kadoIn:hover img {
+    transform: rotate(10deg) scale(1.1);
+    filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.7));
+  }
+  
+  .love-icon {
+    cursor: pointer;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  
+  .love-icon:hover {
+    transform: scale(1.3);
+  }
+  
+  #kolombaru li {
+    transition: transform 0.5s ease, color 0.5s ease;
+  }
+  
+  #kolombaru li:hover {
+    transform: scale(1.3);
+  }
+  
+  .glow-text {
+    text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+    animation: glow 1.5s ease-in-out infinite alternate;
+  }
+  
+  @keyframes glow {
+    from {
+      text-shadow: 0 0 5px #fff, 0 0 10px #ff69b4, 0 0 15px #ff69b4;
+    }
+    to {
+      text-shadow: 0 0 10px #fff, 0 0 20px #ff69b4, 0 0 30px #ff69b4;
+    }
+  }
+  
+  .balloon {
+    position: absolute;
+    width: 40px;
+    height: 55px;
+    background-color: rgba(255, 0, 127, 0.7);
+    border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+    animation: float 7s ease-in-out infinite;
+    box-shadow: inset -5px -5px 15px rgba(0, 0, 0, 0.2);
+  }
+  
+  .balloon:before {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 5px;
+    height: 15px;
+    background-color: rgba(255, 0, 127, 0.7);
+    border-radius: 0 0 5px 5px;
+  }
+  
+  .balloon:after {
+    content: "";
+    position: absolute;
+    bottom: -25px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 30px;
+    background-color: rgba(0, 0, 0, 0.3);
+  }
+  
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0) rotate(3deg);
+    }
+    50% {
+      transform: translateY(-20px) rotate(-3deg);
+    }
+  }
+  
+  .sparkle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background-color: white;
+    animation: sparkle 1.5s linear infinite;
+    opacity: 0;
+  }
+  
+  @keyframes sparkle {
+    0% {
+      opacity: 0;
+      transform: scale(0);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0);
+    }
+  }
+  
+  .birthday-button {
+    padding: 10px 20px;
+    background: linear-gradient(45deg, #ff0066, #ff9933);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 15px rgba(255, 0, 102, 0.4);
+    margin: 10px auto;
+    display: block;
+    transition: all 0.3s ease;
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  
+  .birthday-button:hover {
+    transform: translateY(-3px) scale(1.05);
+    box-shadow: 0 7px 20px rgba(255, 0, 102, 0.6);
+  }
+  
+  .fade-in {
+    animation: fadeIn 1s forwards;
+  }
+  
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  #By {
+    transition: all 0.3s ease;
+  }
+  
+  #By:hover {
+    background: linear-gradient(45deg, #ff6b6b, #ff9999);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(255, 107, 107, 0.6);
+  }
+  
+  #opsL {
+    transition: all 0.3s ease;
+  }
+  
+  #opsL:hover {
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+    color: #ff6b6b;
+    transform: scale(1.05);
+  }
+</style>
+
 </head>
 <body>
 	
-   <!-- Ganti Audio di sini -->
-   <audio src="https://bertm0506.github.io/Pamungkas%20-%20Happy%20Birthday%20To%20You.mp3" id="linkmp3" class="sembunyi" autoplay></audio>
+   <!-- Ganti Audio di sini - hapus atribut autoplay -->
+   <audio id="linkmp3" class="sembunyi"></audio>
+   
+   <!-- Container untuk kembang api -->
+   <div class="fireworks-container" id="fireworks"></div>
    
    <div id="bodyblur">
      <!-- Wallpaper --><img src="https://i.pinimg.com/736x/8b/0a/bb/8b0abbe2e1f23c73803ef872f995cc5a.jpg" id="wallpaper"/><div id="beneranblur"></div>
@@ -28,10 +229,13 @@
    
    <div id='Content'>
 
-     <div id="kadoIn">
+     <div id="kadoIn" class="gift-bounce">
        <!-- Tombol Surat --><img src="https://feeldreams.github.io/kadoin.png"/>
      </div>
      <p id="ket">Klik Kadonya!</p>
+
+     <!-- Balloons Container -->
+     <div id="balloons-container"></div>
 
      <div class="kumpulanstiker">
          <!-- Stiker untuk Konten -->
@@ -52,10 +256,10 @@
 
        <p id="pesan1">Klik 4 LOVE di Bawah! 😆❤️</p>
        <div id="kolombaru">
-         <li id="lv1">🤍</li>
-         <li id="lv2">🤍</li>
-         <li id="lv3">🤍</li>
-         <li id="lv4">🤍</li>
+         <li id="lv1" class="love-icon">🤍</li>
+         <li id="lv2" class="love-icon">🤍</li>
+         <li id="lv3" class="love-icon">🤍</li>
+         <li id="lv4" class="love-icon">🤍</li>
        </div>
 
        <p id="pesan2">Tunggu...</p>
@@ -69,7 +273,10 @@
 
        <p id="pesan9" class="gaya2"></p>
        <p id="pesan10" class="gaya2">Oh iya, semoga di hari spesialmu ini kamu dapat menjadi pribadi yang lebih baik yaa</p>
-       <p id="pesan11" class="gaya2">Happy Level Up Day!! 🥳</p>
+       <p id="pesan11" class="gaya2 glow-text">Happy Level Up Day!! 🥳</p>
+
+       <!-- Tombol tambahan untuk efek -->
+       <button id="surpriseBtn" class="birthday-button">✨ Kejutan Spesial ✨</button>
 
        <!-- Tombol Lanjut -->
        <p id="opsL">Klik untuk Lanjut</p>
@@ -90,35 +297,342 @@
    </div>
 
 <script>
-  const body = document.querySelector("body");const swalst = Swal.mixin({timer: 2300, allowOutsideClick: false, showConfirmButton: false, timerProgressBar: true, imageHeight: 90,}); audio = new Audio('' + linkmp3.src); ftganti=0;fungsi=0;fungsiAwal=0;deffotostiker=fotostiker.src;function berjatuhan() {const heart = document.createElement("div"); heart.className = "fas fa-snowflake"; heart.style.left = (Math.random() * 90)+"vw"; heart.style.animationDuration = (Math.random()*3)+2+"s"; body.appendChild(heart);} setInterval(function name(params) {var heartArr = document.querySelectorAll(".fa-snowflake"); if (heartArr.length > 100) {heartArr[0].remove()}},100);Content.style = "opacity:1;margin-top:16vh"; const swals = Swal.mixin({allowOutsideClick: false, cancelButtonColor: '#FF0040', imageHeight: 80,}); 
-	
-  document.getElementById("kadoIn").onclick = function() {if(fungsiAwal==0){audio.play();fungsiAwal=1;kadoIn.style="transition:all .8s ease;transform:scale(10);opacity:0";wallpaper.style="transform: scale(1.5);";ket.style="display:none";setTimeout(initengahan,300);setTimeout(inipesan,500)}}
+  // Deklarasi variabel dan setup awal
+  const body = document.querySelector("body");
+  const swalst = Swal.mixin({
+    timer: 2300, 
+    allowOutsideClick: false, 
+    showConfirmButton: false, 
+    timerProgressBar: true, 
+    imageHeight: 90
+  });
   
+  // Inisialisasi audio dengan URL yang benar
+  let audio = new Audio("https://bertm0506.github.io/Pamungkas%20-%20Happy%20Birthday%20To%20You.mp3");
   
-async function inipesan(){
-    var { value: pass } = await swals.fire({
-        title: 'Tanggal Lahir Princess (DDMMYYYY)', input: 'password', inputPlaceholder: 'Masukkan password'
+  // Preload audio untuk mengurangi delay
+  audio.load();
+  
+  ftganti=0;
+  fungsi=0;
+  fungsiAwal=0;
+  deffotostiker=fotostiker.src;
+  
+  // Fungsi untuk efek salju/snowflake yang lebih halus
+  function berjatuhan() {
+    const heart = document.createElement("div");
+    heart.className = "fas fa-snowflake";
+    heart.style.left = (Math.random() * 90)+"vw";
+    heart.style.animationDuration = (Math.random()*3)+2+"s";
+    heart.style.opacity = Math.random() * 0.7 + 0.3;
+    heart.style.fontSize = Math.floor(Math.random() * 15) + 10 + "px";
+    body.appendChild(heart);
+  }
+  
+  // Setup interval untuk snowflake
+  setInterval(function() {
+    var heartArr = document.querySelectorAll(".fa-snowflake");
+    if (heartArr.length > 100) {heartArr[0].remove()}
+  }, 100);
+  
+  // Tambahkan balon yang mengapung
+  function addBalloons() {
+    const colors = ['rgba(255, 0, 127, 0.7)', 'rgba(0, 191, 255, 0.7)', 'rgba(255, 215, 0, 0.7)', 'rgba(50, 205, 50, 0.7)', 'rgba(255, 105, 180, 0.7)'];
+    const balloonsContainer = document.getElementById('balloons-container');
+    
+    for (let i = 0; i < 15; i++) {
+      const balloon = document.createElement('div');
+      balloon.className = 'balloon';
+      balloon.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+      balloon.style.left = Math.random() * 100 + '%';
+      balloon.style.top = Math.random() * 100 + '%';
+      balloon.style.animationDelay = Math.random() * 5 + 's';
+      balloon.style.animationDuration = (Math.random() * 5 + 5) + 's';
+      balloon.style.opacity = '0';
+      balloon.style.transform = 'scale(0)';
+      balloonsContainer.appendChild(balloon);
+      
+      // Animasi untuk balon
+      setTimeout(() => {
+        balloon.style.opacity = '1';
+        balloon.style.transform = 'scale(1)';
+        balloon.style.transition = 'all 1s ease';
+      }, Math.random() * 3000);
+    }
+  }
+  
+  // Fungsi untuk membuat efek kilau/bintang
+  function createSparkles() {
+    setInterval(function() {
+      const sparkle = document.createElement('div');
+      sparkle.className = 'sparkle';
+      sparkle.style.left = Math.random() * 100 + '%';
+      sparkle.style.top = Math.random() * 100 + '%';
+      document.body.appendChild(sparkle);
+      
+      setTimeout(() => {
+        sparkle.remove();
+      }, 1500);
+    }, 300);
+  }
+  
+  // Setup efek kembang api
+  let fireworksInstance;
+  function setupFireworks() {
+    const container = document.getElementById('fireworks');
+    fireworksInstance = new Fireworks.default(container, {
+      autoresize: true,
+      opacity: 0.5,
+      acceleration: 1.05,
+      friction: 0.97,
+      gravity: 1.5,
+      particles: 50,
+      traceLength: 3,
+      traceSpeed: 10,
+      explosion: 5,
+      intensity: 30,
+      flickering: 50,
+      lineStyle: 'round',
+      hue: {
+        min: 0,
+        max: 360
+      },
+      delay: {
+        min: 30,
+        max: 60
+      },
+      rocketsPoint: {
+        min: 50,
+        max: 50
+      },
+      lineWidth: {
+        explosion: {
+          min: 1,
+          max: 3
+        },
+        trace: {
+          min: 1,
+          max: 2
+        }
+      },
+      brightness: {
+        min: 50,
+        max: 80
+      },
+      decay: {
+        min: 0.015,
+        max: 0.03
+      },
+      mouse: {
+        click: false,
+        move: false,
+        max: 1
+      }
     });
+  }
+  
+  // Setup konfeti
+  function launchConfetti() {
+    const duration = 5 * 1000;
+    const animationEnd = Date.now() + duration;
+    const defaults = { startVelocity: 30, spread: 360, ticks: 60, zIndex: 0 };
+
+    function randomInRange(min, max) {
+      return Math.random() * (max - min) + min;
+    }
+
+    const interval = setInterval(function() {
+      const timeLeft = animationEnd - Date.now();
+
+      if (timeLeft <= 0) {
+        return clearInterval(interval);
+      }
+
+      const particleCount = 50 * (timeLeft / duration);
+      
+      // Konfeti untuk sisi kiri
+      confetti(Object.assign({}, defaults, { 
+        particleCount, 
+        origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } 
+      }));
+      
+      // Konfeti untuk sisi kanan
+      confetti(Object.assign({}, defaults, { 
+        particleCount, 
+        origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } 
+      }));
+    }, 250);
+  }
+  
+  // Memulai efek visual
+  Content.style = "opacity:1;margin-top:16vh";
+  const swals = Swal.mixin({allowOutsideClick: false, cancelButtonColor: '#FF0040', imageHeight: 80});
+  
+  // Setup kembang api dan efek lainnya
+  setupFireworks();
+  createSparkles();
+	
+  // Event click untuk kado - PERBAIKAN UNTUK AUDIO
+  document.getElementById("kadoIn").onclick = function() {
+    if(fungsiAwal==0){
+      // Coba putar audio dengan explicit user interaction
+      let playPromise = audio.play();
+      
+      // Tangani promise jika browser mengembalikan promise
+      if (playPromise !== undefined) {
+        playPromise.then(_ => {
+          console.log("Audio berhasil diputar!");
+        }).catch(error => {
+          console.log("Gagal memutar audio: ", error);
+          // Coba cara alternatif jika cara pertama gagal
+          setTimeout(() => {
+            audio = new Audio("https://bertm0506.github.io/Pamungkas%20-%20Happy%20Birthday%20To%20You.mp3");
+            audio.play();
+          }, 1000);
+        });
+      }
+      
+      fungsiAwal = 1;
+      kadoIn.style = "transition:all .8s ease;transform:scale(10);opacity:0";
+      wallpaper.style = "transform: scale(1.5);";
+      ket.style = "display:none";
+      
+      // Tambahkan balon setelah kado diklik
+      addBalloons();
+      
+      // Tampilkan tombol kejutan setelah beberapa saat
+      setTimeout(() => {
+        const surpriseBtn = document.getElementById('surpriseBtn');
+        surpriseBtn.classList.add('fade-in');
+        surpriseBtn.style.opacity = '1';
+        surpriseBtn.style.transform = 'translateY(0)';
+      }, 3000);
+      
+      setTimeout(initengahan, 300);
+      setTimeout(inipesan, 500);
+    }
+  }
+  
+  // Debug function untuk membantu troubleshooting audio
+  function playAudioManually() {
+    try {
+      audio.play();
+      console.log("Manual play successful");
+    } catch (e) {
+      console.log("Manual play failed", e);
+    }
+  }
+  
+  // Event untuk tombol kejutan
+  document.getElementById('surpriseBtn').addEventListener('click', function() {
+    // Aktifkan kembang api
+    document.getElementById('fireworks').style.opacity = '1';
+    fireworksInstance.start();
+    
+    // Luncurkan konfeti
+    launchConfetti();
+    
+    // Terapkan efek glow pada semua pesan ulang tahun
+    const pesanElements = document.querySelectorAll(".gaya2");
+    pesanElements.forEach(el => {
+      el.classList.add("glow-text");
+    });
+    
+    // Tambahkan efek getaran
+    document.querySelector('#pesan11').style.fontSize = '1.5em';
+    
+    // Nonaktifkan tombol setelah diklik
+    this.disabled = true;
+    this.textContent = '🎉 Selamat Ulang Tahun! 🎉';
+    
+    // Hentikan kembang api setelah beberapa saat
+    setTimeout(() => {
+      fireworksInstance.stop();
+      document.getElementById('fireworks').style.opacity = '0';
+    }, 10000);
+    
+    // Coba putar audio lagi jika belum berhasil
+    if (audio.paused) {
+      playAudioManually();
+    }
+  });
+  
+  // Fungsi untuk memvalidasi password
+  async function inipesan(){
+    var { value: pass } = await swals.fire({
+        title: 'Tanggal Lahir Princess (DDMMYYYY)', 
+        input: 'password', 
+        inputPlaceholder: 'Masukkan password',
+        confirmButtonText: 'Lanjut ❤️',
+        showClass: {
+          popup: 'animate__animated animate__fadeInDown'
+        },
+        hideClass: {
+          popup: 'animate__animated animate__fadeOutUp'
+        }
+    });
+    
     if(pass === '09052005'){
         window.nama = "Rachelkhiel Wulan Paulina Siahaan";
         vketikhalo = "Hai, " + window.nama + " ✨";
         mulainama();
+        
+        // Tambahkan efek kilau ekstra pada saat nama divalidasi
+        const sparklesCount = 20;
+        for (let i = 0; i < sparklesCount; i++) {
+          setTimeout(() => {
+            const sparkle = document.createElement('div');
+            sparkle.className = 'sparkle';
+            sparkle.style.left = Math.random() * 100 + '%';
+            sparkle.style.top = Math.random() * 100 + '%';
+            document.body.appendChild(sparkle);
+            
+            setTimeout(() => {
+              sparkle.remove();
+            }, 1500);
+          }, i * 100);
+        }
+        
+        // Coba putar audio lagi jika belum berhasil
+        if (audio.paused) {
+          playAudioManually();
+        }
     } else {
-        await swals.fire('Ups!', 'Password salah yaa!');
+        await swals.fire({
+          title: 'Ups!', 
+          text: 'Password salah yaa!', 
+          icon: 'error',
+          confirmButtonText: 'Coba Lagi'
+        });
         inipesan();
     }
-}
+  }
 
-
-  //Variable Pertanyaan Akhir
+  // Variable Pertanyaan Akhir
   var tanya = 'Mau Kado Gak Nih? 😶❤️';
   var opstanya = 'Ayo jawab 😆';
   var tompositif = 'Mau';
   var tomnegatif = 'Engga';
     
-    async function menuju(){pesanwhatsapp = "Makasii udah ngucapin " + nama + " ultah ><";await swals.fire('OK!', 'Kirim jawabannya ke WhatsApp aku, ya!', 'success');window.location = "https://api.whatsapp.com/send/?phone=6281283446636&text&type=phone_number&app_absent=0" + pesanwhatsapp;}
+  async function menuju(){
+    pesanwhatsapp = "Makasii udah ngucapin " + nama + " ultah ><";
+    await swals.fire({
+      title: 'OK!', 
+      text: 'Kirim jawabannya ke WhatsApp aku, ya!', 
+      icon: 'success',
+      confirmButtonText: 'Siap!'
+    });
+    window.location = "https://api.whatsapp.com/send/?phone=6281283446636&text=" + pesanwhatsapp + "&type=phone_number&app_absent=0";
+  }
+
+  // Tambahkan event listener untuk document.body untuk membantu masalah autoplay
+  document.body.addEventListener('click', function() {
+    if (audio.paused && fungsiAwal == 1) {
+      playAudioManually();
+    }
+  }, {once: true});
 </script>
 <script src="https://feeldreams.github.io/heihbd/script.js"></script>
 <!-- Sampai Sini -->
 </body>
-  </html>
+</html>
